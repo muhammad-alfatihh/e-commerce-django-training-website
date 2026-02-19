@@ -1,7 +1,27 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Item
+from django.db.models import Q
+from .models import Category, Item
 # Create your views here.
 
+def items(request):
+    query = request.GET.get('query','')
+    items = Item.objects.filter(is_sold=False)
+    category_id = request.GET.get('category', 0)
+    categories = Category.objects.all()
+    if query:
+        items = items.filter(Q(name__contains=query) | Q(description_icontains=query))
+
+    if category_id:
+        items = items.filter(category_id=category_id)
+        
+    return render(request, 'item/items.html', {
+        'items': items,
+        'query': query,
+        'categories': categories,
+        'category_id':int(category_id)
+    })
+ 
 def detail(request, pk):
     item = get_object_or_404(Item, pk=pk)
     related_items = Item.objects.filter(category=item.category, is_sold=False).exclude(pk=pk)[0:3]
@@ -10,3 +30,4 @@ def detail(request, pk):
         'item': item,
         'related_items' : related_items
     })
+

@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'marketApp',
     'item',
-    'widget_tweaks'
 ]
 
 MIDDLEWARE = [
