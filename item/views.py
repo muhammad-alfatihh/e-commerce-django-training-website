@@ -10,7 +10,7 @@ def items(request):
     category_id = request.GET.get('category', 0)
     categories = Category.objects.all()
     if query:
-        items = items.filter(Q(name__contains=query) | Q(description_icontains=query))
+        items = items.filter(Q(name__contains=query) | Q(description__icontains=query))
 
     if category_id:
         items = items.filter(category_id=category_id)

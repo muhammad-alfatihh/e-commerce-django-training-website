@@ -3,16 +3,16 @@ from item.models import Category, Item
 from .forms import SignupForm
 from django.contrib.auth import logout
 
-def index(request):
+def home(request):
     items = Item.objects.filter(is_sold=False)[0:6]
     categories = Category.objects.all()
 
-    return render(request, 'marketApp/index.html', {
+    return render(request, 'marketApp/home.html', {
                   'categories' : categories,
                   'items' : items,})
 
-def home(request):
-    return render(request, 'marketApp/home.html')
+def index(request):
+    return render(request, 'marketApp/index.html')
 
 
 
